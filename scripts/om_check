@@ -1,0 +1,20 @@
+#!/bin/bash
+
+mode="$(optimus-manager --print-mode | awk '{print $5}')"
+
+case $mode in
+integrated)
+  echo "intel"
+  ;;
+
+hybrid)
+  echo "hybrid"
+  ;;
+
+nvidia)
+  echo "nvidia"
+  ;;
+*)
+  echo "disabled"
+  ;;
+esac
