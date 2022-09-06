@@ -19,11 +19,13 @@ if command -v dunst; then
   dunst -conf $SCRIPTPATH/dunstrc &
 fi
 
-#boot compton or picom if it exists
+#boot picom if it exists
 if command -v picom; then
-  picom --config $SCRIPTPATH/picom.conf --experimental-backends &>/dev/null &
-elif command -v compton; then
-  compton --config $SCRIPTPATH/picom.conf &>/dev/null &
+  if [ $(cat /sys/class/power_supply/BAT0/status) = 'Discharging' ]; then
+    picom --config $SCRIPTPATH/picom.conf --backend xrender &>/dev/null &
+  else
+    picom --config $SCRIPTPATH/picom.conf --experimental-backends &>/dev/null &
+  fi
 fi
 
 # set background
